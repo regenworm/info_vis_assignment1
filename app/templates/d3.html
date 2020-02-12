@@ -32,14 +32,12 @@
 		ev.preventDefault()
 		area_name = ev.target.value;
 		fetch(new Request(`/d3?area_name=${area_name}`), {
-			method: 'POST',
-			// body: JSON.stringify({
-			// 	area_name
-			// })
+			method: 'POST'
 		}).then(r => r.json())
 			.then((data) => {
 				window.data = JSON.parse(data.data)
 				// console.log('data set', window.data, window.axes, window.plotPoints)
+				window.updatePies(window.pies, window.data, area_name)
 				window.plotPoints(window.data, window.chartGroup, window.axes, area_name, config.chartWidth)
 			})
 	}
@@ -51,4 +49,5 @@
 
 <link rel="stylesheet" type="text/css" href="../static/css/barchart.css">
 <script type="text/javascript" src="../static/js/barchart.js"></script>
+<script type="text/javascript" src="../static/js/piechart.js"></script>
 {% endblock %}

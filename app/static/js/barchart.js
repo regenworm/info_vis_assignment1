@@ -1,5 +1,6 @@
 function get_info_on_var (variable) {
     var rel_meta = meta_data.find(function (d) {
+        console.log('asd', d)
         return d.Variabele == variable;
     })
 
@@ -106,9 +107,9 @@ function createChart (data, config) {
     return { chartGroup, axes: { x, y } }
 
 }
+
 function plotPoints (data, chartGroup, axes, selectedArea, chartWidth) {
     let { x, y } = axes
-
 
     let map = d3.map(data[0]);
 
@@ -122,6 +123,7 @@ function plotPoints (data, chartGroup, axes, selectedArea, chartWidth) {
         .on("mouseover", function (d, i) {
             var x_var = d.key;
             var value = d.value;
+            console.log('mausover', d, i)
             var info = get_info_on_var(x_var);
             var label = info[0]
             var definition = info[1];
