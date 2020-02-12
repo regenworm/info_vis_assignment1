@@ -103,6 +103,11 @@ def d3():
 	plot_data = plot_data.to_json(orient='records')
 
 	meta_data = data.stats_ams_meta.to_json(orient='records')
-	return render_template("d3.html", data=plot_data, meta_data=meta_data,
+	print(request.method, request.args)
+	if request.method == 'POST':
+		return jsonify(data=plot_data, meta_data=meta_data,
+		x_variables=data.model_vars, area_names=data.area_names, selected_area_name=area_name)
+	else:
+		return render_template("d3.html", data=plot_data, meta_data=meta_data,
 		x_variables=data.model_vars, area_names=data.area_names, selected_area_name=area_name)
 
