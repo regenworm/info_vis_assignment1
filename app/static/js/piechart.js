@@ -112,20 +112,38 @@ function updatePie (oldPie, data, title) {
   var width = 300,
     height = 500,
     radius = Math.min(width, height) / 2;
+  data = data.map(x => ({ key: x[0], value: x[1] }))
 
+  // labels
   var labelArc = d3.arc()
     .outerRadius(radius - 40)
     .innerRadius(radius - 40);
 
+  // arcs
   let arc = d3.arc()
     .outerRadius(radius - 10)
     .innerRadius(0);
 
+  // pie
   var pie = d3.pie()
     .value(function (d) { return d.value; })(data);
-  path = d3.select("#pie").selectAll("path").data(pie); // Compute the new angles
-  path.attr("d", arc); // redrawing the path
-  d3.selectAll("text").data(pie).attr("transform", function (d) { return "translate(" + labelArc.centroid(d) + ")"; }); // recomputing the centroid and translating the text accordingly.
+
+  // paths
+  path = d3.select(`#${title.split(' ')[0]}`).selectAll("path").data(pie);
+
+  // update slices
+  path
+    .transition()
+    .attr("d", arc)
+    .duration(300); // redrawing the path
+  // update slice labels
+  d3
+    .select(`#${title.split(' ')[0]}`)
+    .selectAll("text")
+    // .remove()
+    // .exit()
+    .data(pie)
+    .attr("transform", function (d) { return "translate(" + labelArc.centroid(d) + ")"; });
 
 }
 
@@ -136,9 +154,9 @@ function updatePies (pies, data, selectedArea) {
   type = tupleData.filter(x => x[0].includes('WCOR') || x[0].includes('WPART'))
 
 
-  surface = updatePie(pies.surface, data, `Surface area of rental properties in ${selectedArea}`)
-  price = updatePie(pies.price, data, `Price segment of rental properties in ${selectedArea}`)
-  type = updatePie(pies.type, data, `Type of rental properties in ${selectedArea}`)
+  surface = updatePie(pies.surface, surface, `Surface area of rental properties in ${selectedArea}`)
+  price = updatePie(pies.price, price, `Price segment of rental properties in ${selectedArea}`)
+  type = updatePie(pies.type, type, `Type of rental properties in ${selectedArea}`)
 
 }
 

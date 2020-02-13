@@ -38,7 +38,7 @@
 				window.data = JSON.parse(data.data)
 				// console.log('data set', window.data, window.axes, window.plotPoints)
 				window.updatePies(window.pies, window.data, area_name)
-				window.plotPoints(window.data, window.chartGroup, window.axes, area_name, config.chartWidth)
+				// window.plotPoints(window.data, window.chartGroup, window.axes, area_name, config.chartWidth)
 			})
 	}
 	var data = {{ data | safe }};
@@ -48,6 +48,6 @@
 </script>
 
 <link rel="stylesheet" type="text/css" href="../static/css/barchart.css">
-<script type="text/javascript" src="../static/js/barchart.js"></script>
+<!-- <script type="text/javascript" src="../static/js/barchart.js"></script> -->
 <script type="text/javascript" src="../static/js/piechart.js"></script>
 {% endblock %}
