@@ -78,6 +78,7 @@ function createPie (data, title) {
     });
 
   g.append("text")
+    .attr("class", `${title.split(' ')[0]}-labels`)
     .attr("transform", function (d) { return "translate(" + labelArc.centroid(d) + ")"; })
     .attr("dy", ".35em")
     .text(function (d) { return d.data.key; });
@@ -85,7 +86,7 @@ function createPie (data, title) {
 
   svg.append("text")
     .attr("class", "title")
-    .attr("id", "chart-title")
+    .attr("id", `${title.split(' ')[0]}-title`)
     .attr("y", -(width / 2))
     .attr("x", 0)
     .style("font-size", "0.65em")
@@ -136,15 +137,33 @@ function updatePie (oldPie, data, title) {
     .transition()
     .attr("d", arc)
     .duration(300); // redrawing the path
+
+
+
   // update slice labels
   d3
     .select(`#${title.split(' ')[0]}`)
     .selectAll("text")
-    // .remove()
-    // .exit()
-    .data(pie)
-    .attr("transform", function (d) { return "translate(" + labelArc.centroid(d) + ")"; });
+    .remove()
+    .exit()
 
+
+  // update title
+  oldPie.append("text")
+    .attr("class", "title")
+    .attr("id", `${title.split(' ')[0]}-title`)
+    .attr("y", -(width / 2))
+    .attr("x", 0)
+    .style("font-size", "0.65em")
+    .style("font-weight", "bold")
+    .style("text-anchor", "middle")
+    .text(title);
+
+  path.append("text")
+    // .attr("class", `${title.split(' ')[0]}-labels`)
+    .attr("transform", function (d) { return "translate(" + labelArc.centroid(d) + ")"; })
+    .attr("dy", ".35em")
+    .text(function (d) { return d.data.key; });
 }
 
 function updatePies (pies, data, selectedArea) {
