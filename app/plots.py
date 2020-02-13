@@ -39,7 +39,7 @@ y_extra_info=data.label_extra_ordered, div_name="myplot"):
 
 	# plot.hbar(left='values', y='variables', right=1, height=0.9, fill_color='red', line_color='black', fill_alpha = 0.75,
 	#         hover_fill_alpha = 1.0, hover_fill_color = 'navy', source=all_data)
-	plot.scatter(x=values, y=y_variables)
+	plot.scatter(x='values', y='variables', source=all_data)
 	plot.title.text = "Relevant statistics about " + area
 	
 	part_rent_slider = Slider(start=0, end=100, value=plot_data.loc[:, 'WPARTHUUR_P'].iloc[0], step=1, title="Private rental")
